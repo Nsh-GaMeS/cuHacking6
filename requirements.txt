@@ -4,3 +4,4 @@ bcrypt
 python-jose
 passlib
 uvicorn
+google
