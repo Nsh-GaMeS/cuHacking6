@@ -25,9 +25,9 @@ GEMINI_API_KEY = os.getenv("GEMINI_KEY")
 def analyze_spending(transactions: json) -> dict:
     categories = {}
     for transaction in transactions:
-        category = transaction['category']
-        amount = transaction['amount']
-        store = transaction['store']
+        category = transactions['category']
+        amount = transactions['amount']
+        store = transactions['store']
         
         if category not in categories:
             categories[category] = {
@@ -48,7 +48,7 @@ def suggest_savings(categories) -> str:
     with open("./prompt.txt", "r") as file:
         response = client.models.generate_content(
             model = "gemini-2.0-flash",
-            contents = categories + " " + file.read(),
+            contents = json.dumps(categories, indent=4) + " " + file.read(),
         )
     
         
@@ -56,7 +56,7 @@ def suggest_savings(categories) -> str:
 
 # Endpoint to analyze a user's spending and provide feedback
 @router.get("/analyze_spending/{user_id}")
-def analyze_user_spending(user_id: int, db: Session = next(get_db)):
+def analyze_user_spending(user_id: int, db: Session = Depends(get_db)):
     transactions = get_transactions(user_id, db)
     if "message" in transactions and transactions["message"] == "User not found":
         return transactions
