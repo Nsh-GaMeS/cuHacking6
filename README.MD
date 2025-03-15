@@ -27,18 +27,18 @@ Follow these steps to set up the project:
     ```
 
 4. Activate virtual environment:    
-### Activation Scripts
-To activate the project, use the following scripts:
+    ### Activation Scripts
+    To activate the project, use the following scripts:
 
-#### For Windows
-```bash
-.\scripts\activate-windows.bat
-```
+    #### For Windows
+    ```bash
+    .\scripts\activate-windows.ps1
+    ```
 
-#### For macOS/Linux
-```bash
-source scripts/activate-unix.sh
-```
+    #### For macOS/Linux
+    ```bash
+    source scripts/activate-unix.sh
+    ```
 5. Install the dependencies:
     ```bash
     pip install -r requirements.txt 
