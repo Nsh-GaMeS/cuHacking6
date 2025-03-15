@@ -19,7 +19,7 @@ Follow these steps to set up the project:
     ```
 2. Navigate to the project directory:
     ```bash
-    cd yourproject
+    cd cuHacking6
     ```
 3. Create a virtual environment:
     ```bash
