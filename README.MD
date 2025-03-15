@@ -1,8 +1,7 @@
-# Project Name
-Smart Dollar
+# Smart Dollar
 
 ## Description
-This project is designed to [provide a brief description of what the project does]. It aims to [explain the main goal or functionality of the project].
+This project is designed to be the backend, API and DateBase of Smart Dollar. It aims to have simple deployment steps.
 
 ## Getting Started
 
