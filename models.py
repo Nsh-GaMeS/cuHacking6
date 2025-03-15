@@ -14,6 +14,7 @@ class User(Base):
     password = Column(String)
     money = Column(Float) # money is the total amount of money the user has
     accounts = relationship("Account", back_populates="user") 
+    transactions = relationship("Transaction", back_populates="user")
 
 # Define the Account model
 # id, name, balance, user_id, transactions
@@ -31,4 +32,16 @@ class Account(Base):
     user_id = Column(Integer, ForeignKey('users.id')) # Add foreign key to link to User model
     user = relationship("User", back_populates="accounts")
 
+# Define the Transaction model
+# id, amount, Store, category, date, user_id
 
+class Transaction(Base):
+    __tablename__ = "transactions"
+
+    id = Column(Integer, primary_key=True, index=True, unique=True)
+    amount = Column(Float)
+    store = Column(String)
+    category = Column(String)
+    date = Column(DateTime)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", back_populates="transactions")

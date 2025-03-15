@@ -11,6 +11,13 @@ from passlib.context import CryptContext
 from datetime import datetime  
 import models
 
+class transaction(BaseModel):
+    amount: float
+    store: str
+    category: str
+    date: datetime
+    user_id: int
+
 class account(BaseModel):
     name: str
     curr_balance: float
@@ -100,5 +107,30 @@ def login_user(creds: credentials, db: Session = Depends(get_db)):
         return {"message": "Invalid Credentials"}
     return user
 
+@router.post("/add_transaction")
+def add_transaction(transaction: transaction, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == transaction.user_id).first()
+    if not user:
+        return {"message": "User not found"}
 
+    new_transaction = models.Transaction(
+        amount=transaction.amount,
+        store=transaction.store,
+        category=transaction.category,
+        date=transaction.date,
+        user_id=user.id
+    )
+    
+    db.add(new_transaction)
+    db.commit()
+    db.refresh(new_transaction)
+    return new_transaction    
+    
+@router.get("/get_transactions")
+def get_transactions(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        return {"message": "User not found"}
+    
+    return user.transactions
 
