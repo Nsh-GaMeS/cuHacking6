@@ -1,0 +1,6 @@
+fastapi==0.68.1
+sqlalchemy
+bcrypt
+python-jose
+passlib
+uvicorn
