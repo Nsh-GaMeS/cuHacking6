@@ -12,10 +12,10 @@ from datetime import datetime
 import models
 
 class transaction(BaseModel):
-    amount: float
-    store: str
-    category: str
-    date: datetime
+    amount: float = 0
+    store: str = "Unknown"
+    category: str = "Unknown"
+    date: datetime = datetime.now()
     user_id: int
 
 class account(BaseModel):
@@ -179,4 +179,15 @@ def get_account_details(account_id: int, db: Session = Depends(get_db)):
     if not account:
         return {"message": "Account not found"}
     
+    return account
+
+@router.get("/update_account_balance")
+def update_account_balance(account_id: int, new_balance: float, db: Session = Depends(get_db)):
+    account = db.query(models.Account).filter(models.Account.id == account_id).first()
+    if not account:
+        return {"message": "Account not found"}
+    
+    account.curr_balance = new_balance
+    db.commit()
+    db.refresh(account)
     return account

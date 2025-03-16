@@ -25,9 +25,9 @@ GEMINI_API_KEY = os.getenv("GEMINI_KEY")
 def analyze_spending(transactions: json) -> dict:
     categories = {}
     for transaction in transactions:
-        category = transactions['category']
-        amount = transactions['amount']
-        store = transactions['store']
+        category = getattr(transaction, 'category', 'Uncategorized')
+        amount = getattr(transaction, 'amount', 0)
+        store = getattr(transaction, 'store', 'Unknown')
         
         if category not in categories:
             categories[category] = {
@@ -58,12 +58,12 @@ def suggest_savings(categories) -> str:
 @router.get("/analyze_spending")
 def analyze_user_spending(user_id: int, db: Session = Depends(get_db)):
     transactions = get_transactions(user_id, db)
+    if not transactions:
+        return {"message": "No transactions found"}, 409
     if "message" in transactions and transactions["message"] == "User not found":
         return transactions
     
     categories = analyze_spending(transactions)
     suggestions = suggest_savings(categories)
     
-    return {
-        "suggestions": suggestions
-    }
+    return {"suggestions": suggestions}
