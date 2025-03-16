@@ -19,8 +19,8 @@ class transaction(BaseModel):
     user_id: int
 
 class account(BaseModel):
-    name: str
-    curr_balance: float
+    name: str = "Cash"
+    curr_balance: float = 0
     final_goal: Optional[float] = None
     time_frame: Optional[datetime] = None
     interest_rate: Optional[float] = None
@@ -30,7 +30,7 @@ class CreateUser(BaseModel):
     email: Optional[str] = None
     username: str
     password: str
-    money: float
+    money: float = 0
     accounts: Optional[List[account]] = None
     
 class credentials(BaseModel):
@@ -134,3 +134,49 @@ def get_transactions(user_id: int, db: Session = Depends(get_db)):
     
     return user.transactions
 
+@router.get("/get_accounts")
+def get_accounts(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        return {"message": "User not found"}
+    
+    return user.accounts
+
+@router.post("/add_account")
+def add_account(account: account, user_id: int, db: Session = Depends(get_db)):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        return {"message": "User not found"}
+    
+    new_account = models.Account(
+        name=account.name,
+        curr_balance=account.curr_balance,
+        final_goal=account.final_goal,
+        time_frame=account.time_frame,
+        interest_rate=account.interest_rate,
+        fees=account.fees,
+        user_id=user.id
+    )
+    
+    db.add(new_account)
+    db.commit()
+    db.refresh(new_account)
+    return new_account
+
+@router.get("/delete_account")
+def delete_account(account_id: int, db: Session = Depends(get_db)):
+    account = db.query(models.Account).filter(models.Account.id == account_id).first()
+    if not account:
+        return {"message": "Account not found"}
+    
+    db.delete(account)
+    db.commit()
+    return {"message": "Account deleted"}
+
+@router.get("/get_account_details")
+def get_account_details(account_id: int, db: Session = Depends(get_db)):
+    account = db.query(models.Account).filter(models.Account.id == account_id).first()
+    if not account:
+        return {"message": "Account not found"}
+    
+    return account

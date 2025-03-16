@@ -55,7 +55,7 @@ def suggest_savings(categories) -> str:
     return response.text
 
 # Endpoint to analyze a user's spending and provide feedback
-@router.get("/analyze_spending/{user_id}")
+@router.get("/analyze_spending")
 def analyze_user_spending(user_id: int, db: Session = Depends(get_db)):
     transactions = get_transactions(user_id, db)
     if "message" in transactions and transactions["message"] == "User not found":
