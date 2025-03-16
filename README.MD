@@ -37,7 +37,7 @@ Follow these steps to set up the project:
 
     #### For macOS/Linux
     ```bash
-    source scripts/activate-unix.sh
+    source ./venv/bin/activate
     ```
 5. Install the dependencies:
     ```bash
