@@ -46,9 +46,17 @@ Follow these steps to set up the project:
 
 
 ## Usage
-Start the api server:
+1. Start the api server:
 ```bash
 uvicorn main:app --reload
 ```
 
 open http://localhost:8000/docs to see the api dashboard.
+
+2. run the api through ngrok to make it public:
+```bash
+ngrok http 8000
+```
+> **Note:** This has to run in a terminal session after running the api server(step 1). Since by default the api server runs on port 8000, the ngrok command will expose the api server to the internet.
+
+> **Note:** Note the ngrok link that is generated. Thats the public link to the api server.
