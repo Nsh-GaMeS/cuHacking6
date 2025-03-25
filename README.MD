@@ -17,7 +17,7 @@ Make sure you have the following installed:
 Follow these steps to set up the project:
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Nsh-GaMeS/cuHacking6.git
+    git clone https://github.com/Nsh-GaMeS/Smart-Dollar.git
     ```
 2. Navigate to the project directory:
     ```bash
