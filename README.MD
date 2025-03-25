@@ -1,7 +1,9 @@
 # Smart Dollar
 
 ## Description
-This project is designed to be the backend, API and DateBase of Smart Dollar. It aims to have simple deployment steps.
+Smart Dollar is an intelligent finance tracker designed to help you set and achieve SMART (Specific, Measurable, Achievable, Relevant, and Time-Bound) financial goals. With personalized AI-driven insights, Smart Dollar optimizes your savings strategy, making it easier and more efficient to reach your financial targets faster. 🚀💰
+
+This repository is designed to be the backend, API and DateBase of Smart Dollar. It aims to have simple deployment steps to work along with the UI(upcoming).
 
 ## Getting Started
 
